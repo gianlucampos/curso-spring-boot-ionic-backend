@@ -22,4 +22,9 @@ public class CategoriaResource {
         return ResponseEntity.ok().body(obj);
     }
 
+    @RequestMapping(value = "/minhaRola", method = RequestMethod.GET)
+    public ResponseEntity<?> test() {
+        return ResponseEntity.ok().body("8========D");
+    }
+
 }
