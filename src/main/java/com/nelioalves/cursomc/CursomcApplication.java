@@ -4,12 +4,12 @@ import com.nelioalves.cursomc.domain.*;
 import com.nelioalves.cursomc.domain.enums.EstadoPagamento;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
 import com.nelioalves.cursomc.repositories.*;
-import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -38,7 +38,7 @@ public class CursomcApplication implements CommandLineRunner {
 
     @Autowired
     private PagamentoRepository pagamentoRepository;
-    
+
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
 
@@ -50,6 +50,11 @@ public class CursomcApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Categoria cat1 = new Categoria(null, "Informática");
         Categoria cat2 = new Categoria(null, "Escritório");
+        Categoria cat3 = new Categoria(null, "Cama mesa e banho");
+        Categoria cat4 = new Categoria(null, "Eletrônicos");
+        Categoria cat5 = new Categoria(null, "Jardinagem");
+        Categoria cat6 = new Categoria(null, "Decoração");
+        Categoria cat7 = new Categoria(null, "Perfumaria");
 
         Produto p1 = new Produto(null, "Computador", 2000.0);
         Produto p2 = new Produto(null, "Impressora", 800.0);
@@ -62,7 +67,7 @@ public class CursomcApplication implements CommandLineRunner {
         p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
         p3.getCategorias().addAll(Arrays.asList(cat1));
 
-        categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+        categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 
         Estado est1 = new Estado(null, "Minas Gerais");
@@ -104,12 +109,12 @@ public class CursomcApplication implements CommandLineRunner {
         ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
         ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
         ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
-        
-        p1.getItens().addAll(Arrays.asList(ip1,ip2));
+
+        p1.getItens().addAll(Arrays.asList(ip1, ip2));
         p2.getItens().addAll(Arrays.asList(ip3));
         p3.getItens().addAll(Arrays.asList(ip2));
-        
-        itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
+
+        itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 
     }
 }
