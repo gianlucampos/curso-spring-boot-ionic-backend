@@ -2,19 +2,16 @@ package com.nelioalves.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nelioalves.cursomc.domain.enums.EstadoPagamento;
+
+import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pagamento implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -69,10 +66,9 @@ public abstract class Pagamento implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Pagamento)) {
+        if (!(object instanceof Pagamento other)) {
             return false;
         }
-        Pagamento other = (Pagamento) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 

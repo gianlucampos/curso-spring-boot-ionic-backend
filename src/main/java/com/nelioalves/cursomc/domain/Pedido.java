@@ -2,6 +2,8 @@ package com.nelioalves.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -19,6 +21,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Pedido implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +29,9 @@ public class Pedido implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instante;
 
-    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
 
-    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
@@ -110,10 +111,9 @@ public class Pedido implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Pedido)) {
+        if (!(object instanceof Pedido other)) {
             return false;
         }
-        Pedido other = (Pedido) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
