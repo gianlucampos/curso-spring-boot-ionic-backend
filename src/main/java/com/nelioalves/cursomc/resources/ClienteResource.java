@@ -2,6 +2,7 @@ package com.nelioalves.cursomc.resources;
 
 import com.nelioalves.cursomc.domain.Cliente;
 import com.nelioalves.cursomc.dto.ClienteDTO;
+import com.nelioalves.cursomc.dto.ClienteNewDTO;
 import com.nelioalves.cursomc.services.ClienteService;
 import com.nelioalves.cursomc.services.exceptions.DataIntegrityException;
 import java.net.URI;
@@ -34,7 +35,7 @@ public class ClienteResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDTO) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO) {
         Cliente obj = service.fromDTO(objDTO);
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
