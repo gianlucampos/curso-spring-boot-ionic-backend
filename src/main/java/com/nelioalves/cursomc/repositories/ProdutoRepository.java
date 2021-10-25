@@ -7,14 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-    @Transactional
+    @Transactional(readOnly=true)
 //    @Query("SELECT DISTINCT ojb FROM Produto obj INNER JOIN obj.categorias cat WHERE obj.nome LIKE %:nome% " +
 //            "AND cat IN :categorias")
     Page<Produto> findDistinctByNomeContainingAndCategoriasIn(@Param("nome") String nome,

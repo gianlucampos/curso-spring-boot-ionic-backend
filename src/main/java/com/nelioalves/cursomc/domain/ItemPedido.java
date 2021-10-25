@@ -1,6 +1,7 @@
 package com.nelioalves.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
@@ -25,13 +26,17 @@ public class ItemPedido implements Serializable {
     }
 
     public ItemPedido(Pedido pedido, Produto produto, Double desconto,
-            Integer quantidade, Double preco) {
+                      Integer quantidade, Double preco) {
         super();
         id.setPedido(pedido);
         id.setProduto(produto);
         this.desconto = desconto;
         this.quantidade = quantidade;
         this.preco = preco;
+    }
+
+    public double getSubTotal() {
+        return (preco - desconto) * quantidade;
     }
 
     @JsonIgnore
