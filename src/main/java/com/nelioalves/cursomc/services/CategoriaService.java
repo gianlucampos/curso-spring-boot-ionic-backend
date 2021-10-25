@@ -1,6 +1,7 @@
 package com.nelioalves.cursomc.services;
 
 import com.nelioalves.cursomc.domain.Categoria;
+import com.nelioalves.cursomc.domain.Categoria;
 import com.nelioalves.cursomc.dto.CategoriaDTO;
 import com.nelioalves.cursomc.repositories.CategoriaRepository;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
@@ -31,7 +32,8 @@ public class CategoriaService {
     }
 
     public Categoria update(Categoria obj) {
-        find(obj.getId());
+        Categoria newObj = find(obj.getId());
+        updateData(newObj, obj);
         return repo.save(obj);
     }
 
@@ -48,9 +50,13 @@ public class CategoriaService {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
     }
-    
+
     public Categoria fromDTO(CategoriaDTO objDTO) {
         return new Categoria(objDTO.getId(), objDTO.getNome());
+    }
+
+    private void updateData(Categoria newObj, Categoria obj) {
+        newObj.setNome(obj.getNome());
     }
 
 }
