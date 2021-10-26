@@ -1,6 +1,8 @@
 package com.nelioalves.cursomc.dto;
 
 import com.nelioalves.cursomc.services.validation.ClienteInsert;
+
+import java.io.Serial;
 import java.io.Serializable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -11,6 +13,7 @@ import org.hibernate.validator.constraints.br.CPF;
 @ClienteInsert
 public class ClienteNewDTO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @NotEmpty(message = "Preenchimento obrigatório")
