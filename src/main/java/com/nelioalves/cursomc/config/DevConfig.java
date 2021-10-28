@@ -5,7 +5,6 @@ import com.nelioalves.cursomc.services.DBService;
 import java.text.ParseException;
 
 import com.nelioalves.cursomc.services.EmailService;
-import com.nelioalves.cursomc.services.MockEmailService;
 import com.nelioalves.cursomc.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
