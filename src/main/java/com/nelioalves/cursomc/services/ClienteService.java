@@ -12,6 +12,7 @@ import com.nelioalves.cursomc.services.exceptions.DataIntegrityException;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,6 +25,8 @@ import org.springframework.data.domain.Sort;
 @Service
 public class ClienteService {
 
+    @Autowired
+    private BCryptPasswordEncoder pe;
     @Autowired
     private ClienteRepository repo;
     @Autowired
@@ -68,12 +71,13 @@ public class ClienteService {
     }
 
     public Cliente fromDTO(ClienteDTO objDto) {
-        return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
+        return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null, null);
     }
 
     public Cliente fromDTO(ClienteNewDTO objDto) {
         Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(), 
-                objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()));             
+                objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()),
+                pe.encode(objDto.getSenha()));
         Cidade cid = new Cidade(objDto.getCidadeId(), null, null);       
         Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(),
                 objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cid);
