@@ -55,7 +55,7 @@ public class ClienteService {
         }
         Optional<Cliente> obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
-                "Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+            "Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
     }
 
     @Transactional
@@ -85,6 +85,22 @@ public class ClienteService {
         return repo.findAll();
     }
 
+    public Cliente findByEmail(String email) {
+        UserSS user = UserService.authenticated();
+        if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+        Cliente obj = repo.findByEmail(email);
+        if (obj == null) {
+            throw new ObjectNotFoundException("Objeto não encontrado! Id: "
+                .concat(user.getId().toString())
+                .concat("Tipo: ")
+                .concat(Cliente.class.getName())
+            );
+        }
+        return obj;
+    }
+
     public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
@@ -96,11 +112,11 @@ public class ClienteService {
 
     public Cliente fromDTO(ClienteNewDTO objDto) {
         Cliente cli = new Cliente(null, objDto.getNome(), objDto.getEmail(),
-                objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()),
-                pe.encode(objDto.getSenha()));
+            objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()),
+            pe.encode(objDto.getSenha()));
         Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
         Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(),
-                objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cid);
+            objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cid);
 
         cli.getEnderecos().add(end);
         cli.getTelefones().add(objDto.getTelefone1());
