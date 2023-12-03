@@ -32,6 +32,7 @@ public class AuthResource {
         if(user == null) throw new AuthorizationException("Acesso negado! Token Expirado");
         String token = jwtUtil.generateToken(user.getUsername());
         response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader("access-control-expose-headers", "Authorization");
         return ResponseEntity.noContent().build();
     }
 
