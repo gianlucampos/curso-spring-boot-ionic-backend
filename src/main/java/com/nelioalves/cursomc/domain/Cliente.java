@@ -41,9 +41,11 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
+    private String imageUrl;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "PERFIS")
-    private Set<Integer> perfis = new HashSet<>();
+    private final Set<Integer> perfis = new HashSet<>();
 
     public Cliente() {
         addPerfil(Perfil.CLIENTE);
@@ -155,5 +157,13 @@ public class Cliente implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
